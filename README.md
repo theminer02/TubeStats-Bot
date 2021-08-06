@@ -15,13 +15,13 @@ A Discord-Bot that collects and sends YouTube stats for a provided channel URL.
 
 ## Links
 
-** Donate: ** https://streamlabs.com/theminer_02/tip
+**Donate:** https://streamlabs.com/theminer_02/tip
 
-** Invite to your Server: ** https://bit.ly/3AiZaUM
+**Invite to your Server:** https://bit.ly/3AiZaUM
 
-** Official Discord:** https://discord.gg/BuYsG4vcqp
+**Official Discord:** https://discord.gg/BuYsG4vcqp
 
-** GitHub: ** https://github.com/TheMiner02/TubeStats-Bot
+**GitHub:** https://github.com/TheMiner02/TubeStats-Bot
 
 ---
 
