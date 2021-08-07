@@ -21,6 +21,13 @@ def checkAccount(channel_id):
     data = json.loads(response.text)
     return (data['pageInfo']['totalResults'])
 
+def getProfilePic(channel_id):
+  response = requests.get(
+    "https://www.googleapis.com/youtube/v3/channels?part=snippet&fields=items%2Fsnippet%2Fthumbnails%2Fdefault&id=" + channel_id + "&key="
+    + os.getenv('GOOGLEAPI'))
+  data = json.loads(response.text)
+  return (data['items'][0]['snippet']['thumbnails']['default']['url'])
+
 # Data for $stats
 def stats_getSubs(channel_id):
     response = requests.get(
@@ -92,7 +99,8 @@ async def on_message(message):
           yt_videos = stats_getVideos(channel)
           yt_views = stats_getViews(channel)
           # ---
-          statsMessage = discord.Embed(title="YouTube Stats", description="**Channel: **" + channel, color=0xf50000)
+          statsMessage = discord.Embed(title="YouTube Stats", description="**Channel: ** [Link](https://www.youtube.com/channel/" + channel + ")", color=0xf50000)
+          statsMessage.set_thumbnail(url=getProfilePic(channel))
           statsMessage.add_field(name="Subscribers", value=yt_subs, inline=False)
           statsMessage.add_field(name="Total videos", value=yt_videos, inline=False)
           statsMessage.add_field(name="Total views", value=yt_views, inline=False)
