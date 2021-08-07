@@ -21,6 +21,8 @@ A Discord-Bot that collects and sends YouTube stats for a provided channel URL.
 
 **Official Discord:** https://discord.gg/BuYsG4vcqp
 
+**Status page:** https://stats.uptimerobot.com/gMl9DtlX91
+
 **GitHub:** https://github.com/TheMiner02/TubeStats-Bot
 
 ---
