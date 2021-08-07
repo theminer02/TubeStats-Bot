@@ -10,17 +10,22 @@ client = discord.Client()
 # ---
 
 def showHelp():
-    commands = '__The commands:__\n\n**$help** - Shows this message.\n**$stats <channel>** - Provides stats for the specified YouTube channel. Use the channel ID. The usage of channel names is still in developement.'
+    commands = '__The commands:__\n\n**$help** - Shows this message.\n**$stats `channel`** - Provides stats for the specified YouTube channel. Use the channel ID or the name.'
     return (commands)
 
 # ---
 
-def checkAccount(channel_id):
-    response = requests.get(
-        "https://www.googleapis.com/youtube/v3/channels?part=statistics&id=" + channel_id + "&key="
-        + os.getenv('GOOGLEAPI'))
-    data = json.loads(response.text)
-    return (data['pageInfo']['totalResults'])
+def getChannelID(channel_name):
+  response = requests.get(
+    "https://youtube.googleapis.com/youtube/v3/search?part=snippet&order=relevance&q=" + channel_name + "&type=channel&key=" + os.getenv('GOOGLEAPI'))
+  data = json.loads(response.text)
+  return (data['items'][0]['snippet']['channelId'])
+
+def getName(channel_id):
+  response = requests.get(
+    "https://youtube.googleapis.com/youtube/v3/search?part=snippet&order=relevance&q=" + channel_id + "&type=channel&key=" + os.getenv('GOOGLEAPI'))
+  data = json.loads(response.text)
+  return (data['items'][0]['snippet']['title'])
 
 def getProfilePic(channel_id):
   response = requests.get(
@@ -71,8 +76,9 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+
 # ---------------------------------------------------------------
-# $help - Shows the list of commands.
+# $help - Shows how to use $stats.
 # ---------------------------------------------------------------
 
     if message.content.startswith('$help'):
@@ -80,6 +86,7 @@ async def on_message(message):
         await message.channel.send(help)
         print(message.guild.name + ' / ' + message.channel.name + ' - Help sent')
         return
+
 
 # ---------------------------------------------------------------
 # $stats - Provides the stats.
@@ -89,32 +96,30 @@ async def on_message(message):
 
         unknown_channel = "`I don't know this channel. Please try another one.`"
         try:
-          channel = message.content.split("$stats ", 1)[1]
+          channelName = message.content.split("$stats ", 1)[1]
         except:
           await message.channel.send(unknown_channel)
           print(message.guild.name + ' / ' + message.channel.name + ' - Empty channel')
           return
-        yt_results = checkAccount(channel)
+
+        channel = getChannelID(channelName)
+        actualName = getName(channel)
 
         # Response:
-        if yt_results == 0:
-          await message.channel.send(unknown_channel)
-          print(message.guild.name + ' / ' + message.channel.name + ' - Unknown channel - Channel: ' + channel)
-          return
-        else:
-          yt_subs = stats_getSubs(channel)
-          yt_videos = stats_getVideos(channel)
-          yt_views = stats_getViews(channel)
-          # ---
-          statsMessage = discord.Embed(title="YouTube Stats", description="**Channel: ** [Link](https://www.youtube.com/channel/" + channel + ")", color=0xf50000)
-          statsMessage.set_thumbnail(url=getProfilePic(channel))
-          statsMessage.add_field(name="Subscribers", value=formatNumber(yt_subs), inline=False)
-          statsMessage.add_field(name="Total videos", value=formatNumber(yt_videos), inline=False)
-          statsMessage.add_field(name="Total views", value=formatNumber(yt_views), inline=False)
-          # ---
-          await message.channel.send(embed=statsMessage)
-          print(message.guild.name + ' / ' + message.channel.name + ' - Stats sent - Channel: ' + channel)
-          return
+        yt_subs = stats_getSubs(channel)
+        yt_videos = stats_getVideos(channel)
+        yt_views = stats_getViews(channel)
+        # ---
+        statsMessage = discord.Embed(title="YouTube Stats", description="**Channel: ** [" + actualName + "](https://www.youtube.com/channel/" + channel + ")", color=0xf50000)
+        statsMessage.set_thumbnail(url=getProfilePic(channel))
+        statsMessage.add_field(name="Subscribers", value=formatNumber(yt_subs), inline=False)
+        statsMessage.add_field(name="Total videos", value=formatNumber(yt_videos), inline=False)
+        statsMessage.add_field(name="Total views", value=formatNumber(yt_views), inline=False)
+        # ---
+        await message.channel.send(embed=statsMessage)
+        print(message.guild.name + ' / ' + message.channel.name + ' - Stats sent - Channel: ' + actualName + ' (' + channel + ')')
+        return
+
 
 # ---------------------------------------------------------------
 # $ - Unknown commands
