@@ -9,7 +9,7 @@ A Discord-Bot that collects and sends YouTube stats for a provided channel URL.
 ## Commands
 **$help** - Shows how to use.
 
-**$stats ```channel```** - Provides stats for the specified channel. Use the ID, using channel names is still in developement.
+**$stats ```channel```** - Provides stats for the specified channel. Use the channel names or the ID.
 
 ---
 
