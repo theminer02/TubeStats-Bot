@@ -2,6 +2,7 @@ import discord
 import os
 import json
 import requests
+import locale
 from keep_alive import keep_alive
 
 client = discord.Client()
@@ -27,6 +28,12 @@ def getProfilePic(channel_id):
     + os.getenv('GOOGLEAPI'))
   data = json.loads(response.text)
   return (data['items'][0]['snippet']['thumbnails']['default']['url'])
+
+def formatNumber(number):
+  parsedNr = int(number)
+  locale.setlocale(locale.LC_ALL, '')
+  formattedNumber = locale.format_string("%d", parsedNr, grouping=True)
+  return (formattedNumber)
 
 # Data for $stats
 def stats_getSubs(channel_id):
@@ -101,9 +108,9 @@ async def on_message(message):
           # ---
           statsMessage = discord.Embed(title="YouTube Stats", description="**Channel: ** [Link](https://www.youtube.com/channel/" + channel + ")", color=0xf50000)
           statsMessage.set_thumbnail(url=getProfilePic(channel))
-          statsMessage.add_field(name="Subscribers", value=yt_subs, inline=False)
-          statsMessage.add_field(name="Total videos", value=yt_videos, inline=False)
-          statsMessage.add_field(name="Total views", value=yt_views, inline=False)
+          statsMessage.add_field(name="Subscribers", value=formatNumber(yt_subs), inline=False)
+          statsMessage.add_field(name="Total videos", value=formatNumber(yt_videos), inline=False)
+          statsMessage.add_field(name="Total views", value=formatNumber(yt_views), inline=False)
           # ---
           await message.channel.send(embed=statsMessage)
           print(message.guild.name + ' / ' + message.channel.name + ' - Stats sent - Channel: ' + channel)
