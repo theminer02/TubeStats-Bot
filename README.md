@@ -27,4 +27,4 @@ A Discord-Bot that collects and sends YouTube stats for a provided channel URL.
 
 ---
 
-**Bot-Version:** v1.0
+**Bot-Version:** v2.1
