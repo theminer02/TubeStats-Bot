@@ -73,12 +73,15 @@ def stats_getViews(channel_id):
 async def on_ready():
     print('Logged in as {0.user}'.format(client))
     print('---')
+    i = 0
     print('Servers:')
+    print('')
     for guild in client.guilds:
         print(guild.name)
-        i=i+1
+        i = i + 1
     print('---')
-    print('Total:' + i)
+    i = str(i)
+    print('Total: ' + i)
     print('---')
 
 
