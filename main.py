@@ -10,7 +10,7 @@ client = discord.Client()
 # ---
 
 def showHelp():
-  commands = '__The commands:__\n\n**$help** - Shows this message.\n**$stats `channel`** - Provides stats for the specified YouTube channel. Use the channel ID (not the whole URL) or the name.\n---\n**Invite to your server** - <https://bit.ly/3AiZaUM>'
+  commands = '__The commands:__\n\n**$help** - Shows this message.\n**$stats `channel`** - Provides stats for the specified YouTube channel. Use the channel ID (not the whole URL) or the name.\n---\n**Invite to your server** - <https://bit.ly/3AiZaUM>\n**Vote** - <https://bit.ly/2Xcsa29>'
   return (commands)
 
 # ---
