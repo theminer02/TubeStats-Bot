@@ -10,8 +10,8 @@ client = discord.Client()
 # ---
 
 def showHelp():
-    commands = '__The commands:__\n\n**$help** - Shows this message.\n**$stats `channel`** - Provides stats for the specified YouTube channel. Use the channel ID or the name.'
-    return (commands)
+  commands = '__The commands:__\n\n**$help** - Shows this message.\n**$stats `channel`** - Provides stats for the specified YouTube channel. Use the channel ID (not the whole URL) or the name.\n---\n**Invite to your server** - <https://bit.ly/3AiZaUM>'
+  return (commands)
 
 # ---
 
@@ -41,13 +41,16 @@ def formatNumber(number):
   return (formattedNumber)
 
 # Data for $stats
+
 def stats_getSubs(channel_id):
     response = requests.get(
         "https://www.googleapis.com/youtube/v3/channels?part=statistics&id=" + channel_id + "&key="
         + os.getenv('GOOGLEAPI'))
     data = json.loads(response.text)
-    return (data['items'][0]['statistics']['subscriberCount'])
-
+    try:
+      return (data['items'][0]['statistics']['subscriberCount'])
+    except:
+      return (0)
 
 def stats_getVideos(channel_id):
     response = requests.get(
@@ -69,6 +72,9 @@ def stats_getViews(channel_id):
 @client.event
 async def on_ready():
     print('Logged in as {0.user}'.format(client))
+    print('Servers connected to:')
+    for guild in client.guilds:
+        print(guild.name)
 
 
 @client.event
@@ -127,18 +133,18 @@ async def on_message(message):
 
     if message.content.startswith('$'):
         await message.channel.send('```I dont know this command. Try $help```')
-        print('Unknown Command - Answer sent')
+        print(message.guild.name + ' / ' + message.channel.name + ' - Unknown Command - Answer sent')
         return
 
 
 # ---------------------------------------------------------------
-# Add reaction to messages that contain TubeStat
+# Add reaction to messages that contain "TubeStat"
 # ---------------------------------------------------------------
 
     if 'TubeStat' in message.content:
         reaction = '👀'
         await message.add_reaction(reaction)
-        print(message.guild.name + ' / ' + message.channel.name + 'Added a reaction')
+        print(message.guild.name + ' / ' + message.channel.name + ' - Added a reaction')
         return
 
 keep_alive()
