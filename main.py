@@ -72,9 +72,14 @@ def stats_getViews(channel_id):
 @client.event
 async def on_ready():
     print('Logged in as {0.user}'.format(client))
-    print('Servers connected to:')
+    print('---')
+    print('Servers:')
     for guild in client.guilds:
         print(guild.name)
+        i=i+1
+    print('---')
+    print('Total:' + i)
+    print('---')
 
 
 @client.event
