@@ -9,6 +9,19 @@ client = discord.Client()
 
 # ---
 
+def displayServers():
+    print('---')
+    i = 0
+    print('Servers:')
+    print('')
+    for guild in client.guilds:
+        print(guild.name)
+        i = i + 1
+    print('---')
+    i = str(i)
+    print('Total: ' + i)
+    print('---')
+
 def showHelp():
   commands = '__The commands:__\n\n**$help** - Shows this message.\n**$stats `channel`** - Provides stats for the specified YouTube channel. Use the channel ID (not the whole URL) or the name.\n---\n**Invite to your server** - <https://bit.ly/3AiZaUM>\n**Vote** - <https://bit.ly/2Xcsa29>'
   return (commands)
@@ -72,17 +85,7 @@ def stats_getViews(channel_id):
 @client.event
 async def on_ready():
     print('Logged in as {0.user}'.format(client))
-    print('---')
-    i = 0
-    print('Servers:')
-    print('')
-    for guild in client.guilds:
-        print(guild.name)
-        i = i + 1
-    print('---')
-    i = str(i)
-    print('Total: ' + i)
-    print('---')
+    displayServers()
 
 
 @client.event
