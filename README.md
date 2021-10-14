@@ -1,3 +1,19 @@
+# - This bot will shut off -
+
+Thanks to everyone that used my bot! But activity has ceased and there were almost no commands executed in the last few weeks.
+Adding to this; discord.py - which I used to make the bot - is no longer being updated.
+
+With these facts in mind, I have decided to no longer update and host this bot. However, if you still want to use it, you can find the code on GitHub. You will need your own bot token and an API key for the YouTube API v3.
+
+> The bot will turn off at the time that this announcement is published.
+
+
+Again, thanks for trying out the bot :D
+
+**- TheMiner_02**
+
+---
+
 # TubeStats-Bot by TheMiner_02
 
 
@@ -21,7 +37,7 @@ A Discord-Bot that collects and sends YouTube stats for a provided channel.
 
 **Official Discord:** https://discord.gg/BuYsG4vcqp
 
-**Status page:** https://stats.uptimerobot.com/gMl9DtlX91/788884339
+**Top.gg page:** https://top.gg/bot/873225036880838668/
 
 **GitHub:** https://github.com/TheMiner02/TubeStats-Bot
 
